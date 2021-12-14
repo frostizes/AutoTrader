@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BuisnessLogicLayer.BL;
+using BuisnessLogicLayer.Caching;
 using BuisnessLogicLayer.JwtTokenGenerator;
 using ContractEntities.Entities;
 using DataAccessLayer.DBConfig;
@@ -62,8 +63,6 @@ namespace TradeBot
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddUserManager<ApplicationUserRepository>();
 
-            services.AddScoped<ITokenGenerator, TokenGenerator>();
-            services.AddScoped<IApplicationUserBL, ApplicationUserBL>();
 
 
             services.AddStackExchangeRedisCache(options =>
@@ -73,6 +72,11 @@ namespace TradeBot
             });
 
             services.AddControllers();
+
+            services.AddScoped<ITokenGenerator, TokenGenerator>();
+            services.AddScoped<ICacheManager, CacheManager>();
+            services.AddScoped<IApplicationUserBL, ApplicationUserBL>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TradeBot", Version = "v1" });

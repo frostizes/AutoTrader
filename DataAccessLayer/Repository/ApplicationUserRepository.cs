@@ -55,5 +55,18 @@ namespace DataAccessLayer.Repository
             }
             return false;
         }
+
+        public async Task<bool> CheckEmail(string email)
+        {
+            try
+            {
+                var user = await FindByEmailAsync(email);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }

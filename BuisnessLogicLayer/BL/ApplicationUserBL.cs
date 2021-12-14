@@ -26,19 +26,19 @@ namespace BuisnessLogicLayer.BL
             return await _applicationUserRepository.CreateAsync(newUser, userPassword);
         }
 
-        public Task<bool> CheckEmail(string userEmail)
+        public async Task<bool> CheckEmail(string userEmail)
         {
-            throw new NotImplementedException();
+            return await _applicationUserRepository.CheckEmail(userEmail);
         }
 
-        public Task<ApplicationUser> FindByEmailAsync(string email)
+        public async Task<ApplicationUser> FindByEmailAsync(string email)
         {
-            throw new NotImplementedException();
+            return await _applicationUserRepository.FindByEmailAsync(email);
         }
 
         public Task<bool> CheckPasswordAsync(ApplicationUser existingUser, string password)
         {
-            throw new NotImplementedException();
+            return _applicationUserRepository.CheckPasswordAsync(existingUser, password);
         }
     }
 }
