@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BuisnessLogicLayer.BL;
+using BuisnessLogicLayer.JwtTokenGenerator;
 using ContractEntities.Entities;
 using DataAccessLayer.DBConfig;
 using DataAccessLayer.Repository;
@@ -59,6 +61,10 @@ namespace TradeBot
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddUserManager<ApplicationUserRepository>();
+
+            services.AddScoped<ITokenGenerator, TokenGenerator>();
+            services.AddScoped<IApplicationUserBL, ApplicationUserBL>();
+
 
             services.AddStackExchangeRedisCache(options =>
             {
