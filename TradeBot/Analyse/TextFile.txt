@@ -1,0 +1,3 @@
+﻿etape 1 : get cmc API,
+etape 2 : mapp Servicecrypto to dataCrypto
+etape 3 : for each crypto update value 
