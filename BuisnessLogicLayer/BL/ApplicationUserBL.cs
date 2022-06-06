@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BuisnessLogicLayer.Caching;
 using ContractEntities.Entities;
 using DataAccessLayer.Repository;
 using Microsoft.AspNetCore.Identity;
+using Utils.CacheHelper;
 
 namespace BuisnessLogicLayer.BL
 {

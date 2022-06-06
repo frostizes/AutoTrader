@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace BuisnessLogicLayer.Caching
+namespace Utils.CacheHelper
 {
     public static class DistributedCacheExtensions
     {
