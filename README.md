@@ -1,0 +1,2 @@
+# TradeBot
+CoinMarketCap trade bot
