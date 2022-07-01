@@ -12,10 +12,10 @@ namespace BuisnessLogicLayer.BL
 {
     public class ApplicationUserBL : IApplicationUserBL
     {
-        private readonly ApplicationUserRepository _applicationUserRepository;
+        private readonly IApplicationUserRepository _applicationUserRepository;
         private readonly ICacheManager _cacheManager;
 
-        public ApplicationUserBL(ApplicationUserRepository applicationUserRepository, ICacheManager cacheManager)
+        public ApplicationUserBL(IApplicationUserRepository applicationUserRepository, ICacheManager cacheManager)
         {
             _applicationUserRepository = applicationUserRepository;
             _cacheManager = cacheManager;
@@ -39,6 +39,32 @@ namespace BuisnessLogicLayer.BL
         public Task<bool> CheckPasswordAsync(ApplicationUser existingUser, string password)
         {
             return _applicationUserRepository.CheckPasswordAsync(existingUser, password);
+        }
+
+        public async Task<string> AddTradeBot(TradeBot tradeBot, ApplicationUser applicationUser)
+        {
+            return await _applicationUserRepository.AddTradeBot(tradeBot, applicationUser);
+        }
+
+        public List<Investment> GetAutoTraderWages(string name, ApplicationUser user)
+        {
+            var AutoTrader = user.TradeBots.FirstOrDefault(t => t.Name == name);
+            if (AutoTrader == null)
+            {
+                throw new Exception("TradeBot does not exist");
+
+            }
+            return AutoTrader.BoughtCrypto;
+        }
+
+        public List<ApplicationUser> GetAllUsers()
+        {
+            return _applicationUserRepository.GetAllUsers();
+        }
+
+        public List<TradeBot> GetTradeBots(ApplicationUser applicationUser)
+        {
+            return applicationUser.TradeBots;
         }
     }
 }

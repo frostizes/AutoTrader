@@ -7,6 +7,7 @@ using ContractEntities.Entities;
 using ServiceAccessLayer.CoinMarketCapService.Entities;
 using ServiceAccessLayer.CoinMarketCapService.Mapper;
 using ServiceAccessLayer.Models;
+using Utils.Random;
 
 namespace ServiceAccessLayer.Mapper
 {
@@ -23,11 +24,13 @@ namespace ServiceAccessLayer.Mapper
                     CirculationSupply = model.circulating_supply,
                     CmcRank = model.cmc_rank,
                     CryptoAge = model.date_added,
-                    Id = new CryptoId(){ Id = model.id.ToString() },
+                    CmcKey = model.id.ToString(),
                     MaxSupply = model.max_supply,
                     Name = model.name,
-                    Symbol = model.symbol
+                    Symbol = model.symbol,
+                    OldValueList = new FixedSizedList<double>()
                 };
+                crypto.OldValueList.Add(model.quote.USD.price);
                 cryptos.Add(crypto);
             }
 
@@ -38,7 +41,7 @@ namespace ServiceAccessLayer.Mapper
         {
             return cryptos.Select(c => new Crypto()
             {
-                Id = c.Id
+                CmcKey = c.CmcKey
             }).ToList();
         }
 
@@ -46,7 +49,7 @@ namespace ServiceAccessLayer.Mapper
         {
             return cryptos.Select(c => new Crypto()
             {
-                Id = c.Id,
+                CmcKey = c.CmcKey,
                 Value = c.Value,
                 Name = c.Name,
                 Symbol = c.Symbol

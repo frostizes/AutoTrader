@@ -14,22 +14,22 @@ namespace ServiceAccessLayer.CoinMarketCapService.Entities
         public string symbol { get; set; }
         public string slug { get; set; }
         public int num_market_pairs { get; set; }
-        public DateTime date_added { get; set; }
-        public List<string> tags { get; set; }
+        public DateTime? date_added { get; set; }
+        public List<string>? tags { get; set; }
         public long? max_supply { get; set; }
-        public double circulating_supply { get; set; }
-        public double total_supply { get; set; }
+        public double? circulating_supply { get; set; }
+        public double? total_supply { get; set; }
         public Platform platform { get; set; }
         public int cmc_rank { get; set; }
         public double? self_reported_circulating_supply { get; set; }
         public double? self_reported_market_cap { get; set; }
-        public DateTime last_updated { get; set; }
+        public DateTime? last_updated { get; set; }
         public Quote quote { get; set; }
     }
 
     public class Platform
     {
-        public int id { get; set; }
+        public int? id { get; set; }
         public string name { get; set; }
         public string symbol { get; set; }
         public string slug { get; set; }
@@ -49,7 +49,7 @@ namespace ServiceAccessLayer.CoinMarketCapService.Entities
 
     public class Status
     {
-        public DateTime timestamp { get; set; }
+        public DateTime? timestamp { get; set; }
         public int error_code { get; set; }
         public object error_message { get; set; }
         public int elapsed { get; set; }
@@ -72,6 +72,6 @@ namespace ServiceAccessLayer.CoinMarketCapService.Entities
         public double market_cap { get; set; }
         public double market_cap_dominance { get; set; }
         public double fully_diluted_market_cap { get; set; }
-        public DateTime last_updated { get; set; }
+        public DateTime? last_updated { get; set; }
     }
 }

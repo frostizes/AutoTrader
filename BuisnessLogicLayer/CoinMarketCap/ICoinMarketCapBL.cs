@@ -9,7 +9,9 @@ namespace BuisnessLogicLayer.CoinMarketCap
 {
     public interface ICoinMarketCapBL
     {
-        List<Crypto> GetAllCryptos();
-        Crypto GetCryptoDetail(CryptoId id);
+        Task<List<Crypto>> GetAllCryptos();
+        Task<Crypto> GetCryptoDetail(string id);
+        Task<List<Crypto>> GetCryptosAboveValueThreshHold(int threshHold);
+        Task<List<Crypto>> GetCryptosUnderValueThreshHold(int threshHold);
     }
 }

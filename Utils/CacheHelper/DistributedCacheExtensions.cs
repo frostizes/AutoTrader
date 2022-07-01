@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Utils.CacheHelper
 {
@@ -27,9 +29,8 @@ namespace Utils.CacheHelper
             options.AbsoluteExpirationRelativeToNow = absoluteExpireTime ?? TimeSpan.FromSeconds(60);
             options.SlidingExpiration = unusedExpireTime;
 
-            var jsonData = JsonSerializer.Serialize(data);
+            var jsonData = JsonConvert.SerializeObject(data);
             await cache.SetStringAsync(recordId, jsonData, options);
-            Debug.WriteLine("written");
         }
 
         /// <summary>
@@ -46,7 +47,7 @@ namespace Utils.CacheHelper
             {
                 return default(T);
             }
-            return JsonSerializer.Deserialize<T>(jsonData);
+            return JsonConvert.DeserializeObject<T>(jsonData);
         }
     }
 }

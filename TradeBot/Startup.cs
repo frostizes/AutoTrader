@@ -15,19 +15,22 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using BuisnessLogicLayer.BL;
+using BuisnessLogicLayer.Boot;
 using BuisnessLogicLayer.CmcApiManager;
 using BuisnessLogicLayer.CoinMarketCap;
 using BuisnessLogicLayer.JwtTokenGenerator;
+using BuisnessLogicLayer.Mapper;
+using BuisnessLogicLayer.TradingAlgo;
 using ContractEntities.Entities;
 using DataAccessLayer.DBConfig;
 using DataAccessLayer.Repository;
-using ISSHost.Controllers;
+using IISHost.Controllers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using ServiceAccessLayer.Boot;
 using ServiceAccessLayer.CmcService;
 using ServiceAccessLayer.CoinMarketCapService;
 using ServiceAccessLayer.CoinMarketCapService.Mapper;
@@ -35,7 +38,7 @@ using ServiceAccessLayer.Mapper;
 using Util.Configuration;
 using Utils.CacheHelper;
 
-namespace TradeBot
+namespace AutoTrader
 {
     public class Startup
     {
@@ -85,20 +88,31 @@ namespace TradeBot
                 options.InstanceName = "Redis_";
             });
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(jsonOptions =>
+                {
+                    jsonOptions.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    jsonOptions.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Ignore;
+                    jsonOptions.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+                    jsonOptions.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
             InitServices(services);
+            services.AddTransient<IApplicationUserRepository, ApplicationUserRepository>();
             services.AddTransient<ICoinMarketCapMapper, CoinMarketCapMapper>();
-            services.AddTransient<ICoinMarketCapServiceBoot, CoinMarketCapServiceBoot>();
+            services.AddTransient<IMapper, Mapper>();
+            services.AddTransient<IBoot,Boot>();
+            services.AddTransient<ITrader,Trader>();
             services.AddTransient<ITokenGenerator, TokenGenerator>();
             services.AddTransient<ICacheManager, CacheManager>();
             services.AddTransient<ICoinMarketCapBL, CoinMarketCapBL>();
+            services.AddTransient<IApplicationUserBL, ApplicationUserBL>();
             services.AddTransient<ICoinMarketCapController, CoinMarketCapController>();
             services.AddTransient<ICryptoRepository, CryptoRepository>();
 
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TradeBot", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TradeBots", Version = "v1" });
             });
 
         }
@@ -110,7 +124,7 @@ namespace TradeBot
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TradeBot v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TradeBots v1"));
             }
 
             app.UseHttpsRedirection();
@@ -124,7 +138,7 @@ namespace TradeBot
             {
                 endpoints.MapControllers();
             });
-            app.ApplicationServices.GetService<ICoinMarketCapServiceBoot>().Start();
+            app.ApplicationServices.GetService<IBoot>().Start();
         }
 
         private void InitServices(IServiceCollection services)

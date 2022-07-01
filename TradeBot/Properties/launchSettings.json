@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "TradeBot": {
+    "AutoTrader": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

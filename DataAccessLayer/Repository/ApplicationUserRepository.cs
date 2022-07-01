@@ -13,7 +13,7 @@ using Util.ExceptionsHandler;
 
 namespace DataAccessLayer.Repository
 {
-    public class ApplicationUserRepository : UserManager<ApplicationUser>
+    public class ApplicationUserRepository : UserManager<ApplicationUser>, IApplicationUserRepository
     {
         private readonly ILogger<UserManager<ApplicationUser>> _logger;
         private readonly AppDbContext _appDbContext;
@@ -56,6 +56,12 @@ namespace DataAccessLayer.Repository
             return false;
         }
 
+        public override Task<IdentityResult> CreateAsync(ApplicationUser user)
+        {
+            user.TradeBots = new List<TradeBot>();
+            return base.CreateAsync(user);
+        }
+
         public async Task<bool> CheckEmail(string email)
         {
             try
@@ -67,6 +73,30 @@ namespace DataAccessLayer.Repository
             {
                 return false;
             }
+        }
+
+        public async Task<string> AddTradeBot(TradeBot tradeBot, ApplicationUser user)
+        {
+            var alreadyCreatedAutoTrader = user.TradeBots.FirstOrDefault(t => t.Name == tradeBot.Name);
+            if (alreadyCreatedAutoTrader == null)
+            {
+                user.TradeBots.Add(tradeBot);
+                var result = await base.UpdateAsync(user);
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.ToString());
+                }
+                return "succesfully added a tradebot to your account";
+            }
+            else
+            {
+                throw new Exception("TradeBot with that name already created for this user");
+            }
+        }
+
+        public List<ApplicationUser> GetAllUsers()
+        {
+            return _appDbContext.Users.ToList();
         }
     }
 }

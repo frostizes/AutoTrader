@@ -14,5 +14,9 @@ namespace BuisnessLogicLayer.BL
         Task<bool> CheckEmail(string userEmail);
         Task<ApplicationUser> FindByEmailAsync(string email);
         Task<bool> CheckPasswordAsync(ApplicationUser existingUser, string password);
+        Task<string> AddTradeBot(TradeBot tradeBot, ApplicationUser applicationUser);
+        List<Investment> GetAutoTraderWages(string name, ApplicationUser user);
+        List<ApplicationUser> GetAllUsers();
+        List<TradeBot> GetTradeBots(ApplicationUser applicationUser);
     }
 }

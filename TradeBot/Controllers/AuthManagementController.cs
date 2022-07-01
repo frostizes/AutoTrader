@@ -21,7 +21,7 @@ using Util.Configuration;
 using Util.ExceptionsHandler;
 using ILogger = Castle.Core.Logging.ILogger;
 
-namespace WindowsService.Controllers
+namespace IISHost.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

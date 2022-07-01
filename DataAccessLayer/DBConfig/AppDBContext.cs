@@ -12,6 +12,10 @@ namespace DataAccessLayer.DBConfig
 {
     public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
+
+        public DbSet<TradeBot> TradeBot { get; set; }
+        public DbSet<Crypto> Crypto { get; set; }
+        public DbSet<Investment> Investments { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             var path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "DataAccessLayer\\SqliteDatabase.db");

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ContractEntities.Entities;
 
-namespace ISSHost.Controllers
+namespace IISHost.Controllers
 {
     public interface ICoinMarketCapController
     {
-        List<Crypto> GetCryptosList();
-        Crypto GetCryptoDetail(string id);
+        Task<List<Crypto>> GetCryptosList();
+        Task<Crypto> GetCryptoDetail(string id);
     }
 }

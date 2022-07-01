@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using ContractEntities.Entities;
-using ServiceAccessLayer.Boot;
 using ServiceAccessLayer.CmcService;
 using ServiceAccessLayer.CoinMarketCapService.Mapper;
 using Utils.CacheHelper;
@@ -14,30 +13,19 @@ namespace ServiceAccessLayer.CoinMarketCapService
 {
     public class CoinMarketCapAgent : ICoinMarketCapAgent
     {
-        private readonly ICacheManager _cacheManager;
-        private readonly ICoinMarketCapServiceBoot _coinMarketCapServiceBoot;
+        private readonly ICoinMarketCapClient _coinMarketCapClient;
+        private readonly ICoinMarketCapMapper _coinMarketCapMapper;
 
-        public CoinMarketCapAgent(ICacheManager cacheManager, ICoinMarketCapServiceBoot coinMarketCapServiceBoot)
+        public CoinMarketCapAgent(ICoinMarketCapClient coinMarketCapClient, ICoinMarketCapMapper coinMarketCapMapper)
         {
-            _cacheManager = cacheManager;
-            _coinMarketCapServiceBoot = coinMarketCapServiceBoot;
+            _coinMarketCapClient = coinMarketCapClient;
+            _coinMarketCapMapper = coinMarketCapMapper;
         }
 
         public async Task<List<Crypto>> GetAllCryptos()
         {
-            var allCryptos = await _cacheManager.GetRecord<List<Crypto>>(_coinMarketCapServiceBoot.GenerateCryptoIdListKey());
-            return allCryptos;
-        }
-
-        public async Task<List<Crypto>> GetCryptosSummary()
-        {
-            var cryptosSummary = await _cacheManager.GetRecord<List<Crypto>>(_coinMarketCapServiceBoot.GenerateCryptoSummaryListKey());
-            return cryptosSummary;
-        }
-        public async Task<Crypto> GetCryptoDetail(CryptoId cryptoId)
-        {
-            var cryptoDetail = await _cacheManager.GetRecord<Crypto>(_coinMarketCapServiceBoot.GenerateCryptoDetailKey(cryptoId));
-            return cryptoDetail;
+            var allCryptos = await _coinMarketCapClient.GetAllCryptos();
+            return _coinMarketCapMapper.MapCryptoModelsToCryptos(allCryptos);
         }
     }
 }

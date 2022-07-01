@@ -1,12 +1,12 @@
 ﻿en tant qu'utilisateur je souhaite pouvoir me connecter
-en tant qu'utilisateur je souhaite pouvoir créer un tradeBot et lui donner une somme d'argent
-en tant qu'utilisateur je souhaite pouvoir configurer mon tradeBot selon certains critères
+en tant qu'utilisateur je souhaite pouvoir créer un AutoTrader et lui donner une somme d'argent
+en tant qu'utilisateur je souhaite pouvoir configurer mon AutoTrader selon certains critères
 	(dayTrading, WeekTrading, monthTrading)
 en tant qu'utilisateur je souhaite pouvoir placer de l'argent sur une crypto
 en tant qu'utilisateur je souhaite avoir accès a mes cryptos
 en tant qu'utilisateur je voudrait pouvoir rechercher une crypto et voir son cours
 en tant qu'utilisateur je souhaite voir l'historique de mes achats et les pertes et gains
-en tant qu'utilisateur je souhaite pouvoir laisser mon tradeBot investir lui meme mon argent ou bien avoir des conseils sur quoi investir
+en tant qu'utilisateur je souhaite pouvoir laisser mon AutoTrader investir lui meme mon argent ou bien avoir des conseils sur quoi investir
 en tant qu'utilisatuer je souhaite pouvoir recevoir des mails et des notifs pour me dire quand vendre ou acheter sur ma plateforme de trading
 
 création d'un bot de crypto trading

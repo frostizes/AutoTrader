@@ -3,14 +3,16 @@ using System;
 using DataAccessLayer.DBConfig;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220630125851_delete db v4")]
+    partial class deletedbv4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,7 +91,6 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("ContractEntities.Entities.Crypto", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<double?>("CirculationSupply")
@@ -127,7 +128,6 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("ContractEntities.Entities.Investment", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("CryptoId")
@@ -151,7 +151,6 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("ContractEntities.Entities.TradeBot", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ApplicationUserId")

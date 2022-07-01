@@ -11,7 +11,7 @@ namespace ServiceAccessTests
 
         public CoinMarketCapServiceTests()
         {
-            _coinMarketCapClient = new CoinMarketCapClient()
+            //_coinMarketCapClient = new CoinMarketCapClient()
         }
 
         [TestMethod]

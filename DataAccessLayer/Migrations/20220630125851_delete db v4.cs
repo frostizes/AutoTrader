@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccessLayer.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class deletedbv4 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,26 @@ namespace DataAccessLayer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Crypto",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    CmcKey = table.Column<string>(type: "TEXT", nullable: true),
+                    Symbol = table.Column<string>(type: "TEXT", nullable: true),
+                    Value = table.Column<double>(type: "REAL", nullable: false),
+                    InvestValue = table.Column<int>(type: "INTEGER", nullable: false),
+                    CryptoAge = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    MaxSupply = table.Column<long>(type: "INTEGER", nullable: true),
+                    CirculationSupply = table.Column<double>(type: "REAL", nullable: true),
+                    CmcRank = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Crypto", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -154,6 +174,54 @@ namespace DataAccessLayer.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "TradeBot",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Wallet = table.Column<double>(type: "REAL", nullable: false),
+                    MaxInvest = table.Column<double>(type: "REAL", nullable: false),
+                    CanTrade = table.Column<bool>(type: "INTEGER", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TradeBot", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TradeBot_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Investments",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    CryptoId = table.Column<string>(type: "TEXT", nullable: true),
+                    InvestedMoney = table.Column<double>(type: "REAL", nullable: false),
+                    TradeBotId = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Investments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Investments_Crypto_CryptoId",
+                        column: x => x.CryptoId,
+                        principalTable: "Crypto",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Investments_TradeBot_TradeBotId",
+                        column: x => x.TradeBotId,
+                        principalTable: "TradeBot",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -190,6 +258,21 @@ namespace DataAccessLayer.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Investments_CryptoId",
+                table: "Investments",
+                column: "CryptoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Investments_TradeBotId",
+                table: "Investments",
+                column: "TradeBotId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TradeBot_ApplicationUserId",
+                table: "TradeBot",
+                column: "ApplicationUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -210,7 +293,16 @@ namespace DataAccessLayer.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Investments");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Crypto");
+
+            migrationBuilder.DropTable(
+                name: "TradeBot");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

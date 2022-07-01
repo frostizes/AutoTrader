@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211214125905_initialMigration")]
-    partial class initialMigration
+    [Migration("20220630130706_update ids setup")]
+    partial class updateidssetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -86,6 +86,96 @@ namespace DataAccessLayer.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("ContractEntities.Entities.Crypto", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<double?>("CirculationSupply")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("CmcKey")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("CmcRank")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("CryptoAge")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("InvestValue")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("MaxSupply")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Symbol")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Crypto");
+                });
+
+            modelBuilder.Entity("ContractEntities.Entities.Investment", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CryptoId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("InvestedMoney")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("TradeBotId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CryptoId");
+
+                    b.HasIndex("TradeBotId");
+
+                    b.ToTable("Investments");
+                });
+
+            modelBuilder.Entity("ContractEntities.Entities.TradeBot", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("CanTrade")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("MaxInvest")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Wallet")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("TradeBot");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -220,6 +310,26 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ContractEntities.Entities.Investment", b =>
+                {
+                    b.HasOne("ContractEntities.Entities.Crypto", "Crypto")
+                        .WithMany()
+                        .HasForeignKey("CryptoId");
+
+                    b.HasOne("ContractEntities.Entities.TradeBot", null)
+                        .WithMany("BoughtCrypto")
+                        .HasForeignKey("TradeBotId");
+
+                    b.Navigation("Crypto");
+                });
+
+            modelBuilder.Entity("ContractEntities.Entities.TradeBot", b =>
+                {
+                    b.HasOne("ContractEntities.Entities.ApplicationUser", null)
+                        .WithMany("TradeBots")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -269,6 +379,16 @@ namespace DataAccessLayer.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ContractEntities.Entities.ApplicationUser", b =>
+                {
+                    b.Navigation("TradeBots");
+                });
+
+            modelBuilder.Entity("ContractEntities.Entities.TradeBot", b =>
+                {
+                    b.Navigation("BoughtCrypto");
                 });
 #pragma warning restore 612, 618
         }

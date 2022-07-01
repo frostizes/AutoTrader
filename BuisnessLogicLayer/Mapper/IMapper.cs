@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using ContractEntities.Entities;
 
-namespace ServiceAccessLayer.CoinMarketCapService
+namespace BuisnessLogicLayer.Mapper
 {
-    public interface ICoinMarketCapAgent
+    public interface IMapper
     {
-        Task<List<Crypto>> GetAllCryptos();
+        List<Crypto> ToCryptoIdList(List<Crypto> cryptos);
     }
 }

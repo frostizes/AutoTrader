@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using BuisnessLogicLayer.CoinMarketCap;
 using ContractEntities.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
-namespace ISSHost.Controllers
+namespace IISHost.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -15,17 +17,17 @@ namespace ISSHost.Controllers
         {
             _coinMarketCapBl = coinMarketCapBl;
         }
-
+         
         [HttpGet("getallcryptos")]
-        public List<Crypto> GetCryptosList()
+        public async Task<List<Crypto>> GetCryptosList()
         {
-            return _coinMarketCapBl.GetAllCryptos();
+            return await _coinMarketCapBl.GetAllCryptos();
         }
 
         [HttpGet("getcryptodetail{id}")]
-        public Crypto GetCryptoDetail([FromRoute] string id)
+        public async Task<Crypto> GetCryptoDetail([FromRoute] string id)
         {
-            return _coinMarketCapBl.GetCryptoDetail(new CryptoId() { Id = id });
+            return await _coinMarketCapBl.GetCryptoDetail(id);
         }
     }
 }

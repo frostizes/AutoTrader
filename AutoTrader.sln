@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31729.503
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ISSHost", "TradeBot\ISSHost.csproj", "{BAED4E28-669E-401F-AA4A-143B3B3E68B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IISHost", "TradeBot\IISHost.csproj", "{BAED4E28-669E-401F-AA4A-143B3B3E68B4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuisnessLogicLayer", "BuisnessLogicLayer\BuisnessLogicLayer.csproj", "{6DACE6A2-A398-4C1A-90C5-E4906349A4D7}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{20D7F5A3-39FE-48AC-9594-7AFCE4A2893F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceAccessTests", "ServiceAccessTests\ServiceAccessTests.csproj", "{01F35E43-5DC6-47F3-89A9-D70AD8D1AFE3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuisnessLogicLayerTests", "BuisnessLogicLayerTests\BuisnessLogicLayerTests.csproj", "{E2F07D3C-A014-445D-A6C6-8043B4BA403F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,12 +55,17 @@ Global
 		{01F35E43-5DC6-47F3-89A9-D70AD8D1AFE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01F35E43-5DC6-47F3-89A9-D70AD8D1AFE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01F35E43-5DC6-47F3-89A9-D70AD8D1AFE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2F07D3C-A014-445D-A6C6-8043B4BA403F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2F07D3C-A014-445D-A6C6-8043B4BA403F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2F07D3C-A014-445D-A6C6-8043B4BA403F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2F07D3C-A014-445D-A6C6-8043B4BA403F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{01F35E43-5DC6-47F3-89A9-D70AD8D1AFE3} = {20D7F5A3-39FE-48AC-9594-7AFCE4A2893F}
+		{E2F07D3C-A014-445D-A6C6-8043B4BA403F} = {20D7F5A3-39FE-48AC-9594-7AFCE4A2893F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {70A237B7-D479-4EC7-9B02-418E6F068E29}
